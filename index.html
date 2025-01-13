@@ -1,4 +1,4 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>  
 <html lang="en">  
 <head>  
     <meta charset="UTF-8">  
@@ -8,9 +8,8 @@
 </head>  
 <body>  
     <div id="calculator">  
-        <input type="text" id="display-history" disabled placeholder="History" />  
-        <input type="text" id="display" disabled placeholder="0" />  
-        <!-- Separate history for ongoing operations and final result display -->  
+        <input type="text" id="display" disabled />  
+        <!-- input is disabled because we are using it as a display panel not as an entry point -->
         <div id="buttons">  
             <button class="btn" data-value="7">7</button>  
             <button class="btn" data-value="8">8</button>  
@@ -33,6 +32,7 @@
             <button class="btn" id="clear">C</button>  
         </div>  
     </div>  
-    <script src="src/js/calculator.js"></script>  
+    <script src="src/js/calculator.js"></script>
+    <!-- <script src="./src/js/script.js"></script>   -->
 </body>  
-</html>
+</html> 
