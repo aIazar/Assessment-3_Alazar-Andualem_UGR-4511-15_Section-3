@@ -1,89 +1,87 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const display = document.getElementById("display");
-    const buttons = document.querySelectorAll(".btn");
-    const clearButton = document.getElementById("clear");
-    const equalsButton = document.getElementById("equals");
+    const screenElement = document.getElementById("display");
+    const actionButtons = document.querySelectorAll(".btn");
+    const resetButton = document.getElementById("clear");
+    const calculateButton = document.getElementById("equals");
 
-    let currentInput = "";
-    let currentOperator = null;
-    let previousInput = null;
+    let currentValue = "";
+    let operatorValue = null;
+    let previousValue = null;
 
-    // Function to update the display
-    function updateDisplay(value) {
-        display.value = value;
+
+    function refreshScreen(value) {
+        screenElement.value = value;
     }
 
-    // Function to clear the display
-    function clearDisplay() {
-        currentInput = "";
-        previousInput = null;
-        currentOperator = null;
-        updateDisplay("");
+    function resetCalculator() {
+        currentValue = "";
+        previousValue = null;
+        operatorValue = null;
+        refreshScreen("");
     }
 
-    // Function to handle number and operator button clicks
-    function handleButtonClick(event) {
-        const value = event.target.getAttribute("data-value");
 
-        // If the button clicked is an operator
-        if (["+", "-", "*", "/"].includes(value)) {
-            if (previousInput !== null) {
-                performCalculation();
+    function processButtonClick(event) {
+        const inputValue = event.target.getAttribute("data-value");
+
+
+        if (["+", "-", "*", "/"].includes(inputValue)) {
+            if (previousValue !== null) {
+                executeCalculation();
             }
-            currentOperator = value;
-            previousInput = currentInput;
-            currentInput = "";
+            operatorValue = inputValue;
+            previousValue = currentValue;
+            currentValue = "";
         } else {
-            currentInput += value;
+            currentValue += inputValue;
         }
 
-        updateDisplay(currentInput);
+        refreshScreen(currentValue);
     }
 
-    // Function to perform the calculation
-    function performCalculation() {
-        if (previousInput !== null && currentOperator !== null) {
-            let result;
+    function executeCalculation() {
+        if (previousValue !== null && operatorValue !== null) {
+            let calculationResult;
 
-            const prev = parseFloat(previousInput);
-            const current = parseFloat(currentInput);
+            const prevNumber = parseFloat(previousValue);
+            const currentNumber = parseFloat(currentValue);
 
-            switch (currentOperator) {
+            switch (operatorValue) {
                 case "+":
-                    result = prev + current;
+                    calculationResult = prevNumber + currentNumber;
                     break;
                 case "-":
-                    result = prev - current;
+                    calculationResult = prevNumber - currentNumber;
                     break;
                 case "*":
-                    result = prev * current;
+                    calculationResult = prevNumber * currentNumber;
                     break;
                 case "/":
-                    if (current === 0) {
-                        result = "Error";
+                    if (currentNumber === 0) {
+                        calculationResult = "Error";
                     } else {
-                        result = prev / current;
+                        calculationResult = prevNumber / currentNumber;
                     }
                     break;
             }
 
-            currentInput = result.toString();
-            previousInput = null;
-            currentOperator = null;
-            updateDisplay(currentInput);
+            currentValue = calculationResult.toString();
+            previousValue = null;
+            operatorValue = null;
+            refreshScreen(currentValue);
         }
     }
 
-    // Event listener for button clicks
-    buttons.forEach(button => {
-        button.addEventListener("click", handleButtonClick);
+    
+    actionButtons.forEach(button => {
+        button.addEventListener("click", processButtonClick);
     });
 
-    // Event listener for equals button
-    equalsButton.addEventListener("click", function() {
-        performCalculation();
+    // event listener for equals 
+    calculateButton.addEventListener("click", function() {
+        executeCalculation();
     });
 
-    // Event listener for clear button
-    clearButton.addEventListener("click", clearDisplay);
+    // event listener for clear
+    resetButton.addEventListener("click", resetCalculator);
 });
